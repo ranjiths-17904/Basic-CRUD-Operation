@@ -15,9 +15,12 @@
             border-color: #28a745; 
             background-color: #f4f0c2; 
         }
+
         label:hover {
             color: #8e360a;
         }
+     
+
     </style>
 </head>
 <body style="background-color:rgb(5, 24, 41); color: aliceblue;">
@@ -45,8 +48,7 @@
 
                 <div class="col-10 col-md-8 mb-3">
                     <label for="contact">Contact No:</label><br>
-                    <input class="form-control" type="tel" id="contact" placeholder="Enter your Phone No" pattern="[0-9]{10}" required><br>
-                    <small class="text-danger" id="contactError" style="display:none;">Contact number must be exactly 10 digits.</small>
+                    <input class="form-control" type="number" id="contact" placeholder="Enter your Phone No" required><br>
                 </div>
 
                 <div class="col-8 d-flex justify-content-center">
@@ -81,27 +83,11 @@
 
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
+
                 const studentName = document.getElementById('studentname').value;
                 const className = document.getElementById('class').value;
                 const registerNo = document.getElementById('register').value;
                 const contactNo = document.getElementById('contact').value;
-
-                // Validation
-                const nameRegex = /^[A-Za-z\s]+$/;
-                const contactRegex = /^[0-9]{10}$/;
-
-                if (!nameRegex.test(studentName)) {
-                    alert("Student name must contain only letters.");
-                    return;
-                }
-                
-                if (!contactRegex.test(contactNo)) {
-                    document.getElementById('contactError').style.display = 'block';
-                    return;
-                } else {
-                    document.getElementById('contactError').style.display = 'none';
-                }
 
                 if (!editMode) {
                     addStudent(studentName, className, registerNo, contactNo);
