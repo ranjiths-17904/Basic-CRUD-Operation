@@ -19,8 +19,6 @@
         label:hover {
             color: #8e360a;
         }
-     
-
     </style>
 </head>
 <body style="background-color:rgb(5, 24, 41); color: aliceblue;">
@@ -57,7 +55,7 @@
             </form>
 
             <div class="col-12 mt-5">
-                <table class="table table-striped table-dark ">
+                <table class="table table-striped table-dark">
                     <thead>
                         <tr>
                             <th>Name of the Student</th>
@@ -80,15 +78,28 @@
             const studentList = document.querySelector('.student-list');
             let editMode = false;
             let editRow;
-
+    
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-
-                const studentName = document.getElementById('studentname').value;
-                const className = document.getElementById('class').value;
-                const registerNo = document.getElementById('register').value;
-                const contactNo = document.getElementById('contact').value;
-
+    
+                const studentName = document.getElementById('studentname').value.trim();
+                const className = document.getElementById('class').value.trim();
+                const registerNo = document.getElementById('register').value.trim();
+                const contactNo = document.getElementById('contact').value.trim();
+    
+                
+                const nameRegex = /^[A-Za-z\s]+$/;
+                if (!nameRegex.test(studentName)) {
+                    alert("Student Name should contain only letters.");
+                    return;
+                }
+    
+                // Validate Phone Number (must be exactly 10 digits)
+                if (contactNo.length !== 10 || isNaN(contactNo)) {
+                    alert("Phone number must be exactly 10 digits.");
+                    return;
+                }
+    
                 if (!editMode) {
                     addStudent(studentName, className, registerNo, contactNo);
                 } else {
@@ -99,7 +110,7 @@
                     resetForm();
                 }
             });
-
+    
             function addStudent(name, className, registerNo, contactNo) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -115,7 +126,7 @@
                 studentList.appendChild(row);
                 resetForm();
             }
-
+    
             function resetForm() {
                 document.getElementById('studentname').value = '';
                 document.getElementById('class').value = '';
@@ -124,7 +135,7 @@
                 editMode = false;
                 editRow = null;
             }
-
+    
             studentList.addEventListener('click', (e) => {
                 if (e.target.classList.contains('edit')) {
                     editRow = e.target.parentElement.parentElement;
@@ -134,13 +145,14 @@
                     document.getElementById('contact').value = editRow.children[3].innerText;
                     editMode = true;
                 }
-
+    
                 if (e.target.classList.contains('delete')) {
                     e.target.parentElement.parentElement.remove();
                 }
             });
         });
     </script>
+    
 
 </body>
 </html>
